@@ -11,7 +11,7 @@ public class PlataformaCursos {
 	private List<Curso> cursosPublicados = new ArrayList<>();
 	
 	public String listarCursosPara(Aluno alunoAutenticado) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -20,7 +20,7 @@ public class PlataformaCursos {
 
 
 	public Curso selecionarCurso(Aluno aluno, Curso cursoDesejado) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 	
@@ -31,4 +31,5 @@ public class PlataformaCursos {
 
 	
 	
+
 }
