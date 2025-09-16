@@ -125,7 +125,7 @@ public class PlataformaTest {
         aluno.inscrever(inscricao);
 
         // QUANDO eu clico no curso "Gamificação Aplicada à Educação"
-        // (A ação de "clicar" é traduzida para a chamada do método que busca o progresso)
+        
         double progressoObtido = aluno.verProgresso(curso);
 
         // ENTÃO eu visualizo o meu progresso nesse curso
@@ -133,3 +133,4 @@ public class PlataformaTest {
     }
     
 }
+
