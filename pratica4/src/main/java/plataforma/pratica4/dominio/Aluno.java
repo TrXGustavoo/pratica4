@@ -1,6 +1,6 @@
 package plataforma.pratica4.dominio;
 
-//Pacote: br.com.plataforma.dominio
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,10 +21,11 @@ public class Aluno {
 		this.inscricoes.add(inscricao);
 	}
 
-	// Método que será o alvo do nosso teste
+
 	public double verProgresso(Curso curso) {
 
 		return 0;
 	}
 
 }
+
