@@ -15,9 +15,9 @@ import plataforma.pratica4.dominio.Inscricao;
 import java.util.List;
 
 
-
 public class PlataformaTest {
 
+    // BDD Gustavo
     @Test
     public void deveExibirMensagemQuandoNaoExistemCursosDisponiveis() {
         
@@ -34,7 +34,8 @@ public class PlataformaTest {
         String mensagemEsperada = "Nenhum curso disponível no momento. Volte em breve!";
         assertEquals(mensagemEsperada, mensagemRetornada);
     }
-        
+
+    // BDD Giovana
     @Test
     public void deveRedirecionarParaPaginaDeDetalhesAoClicarNoCurso() {
 
@@ -59,7 +60,8 @@ public class PlataformaTest {
         
         assertTrue(paginaDestino.possuiBotaoDeAssinatura(), "A página de detalhes deveria exibir o botão 'Assinar Curso'.");
     }
-    
+
+    // BDD Guilherme
     @Test
     public void deveListarCursosQuandoExitemCursosDisponiveis() {
         
@@ -81,7 +83,8 @@ public class PlataformaTest {
         String mensagemEsperada = "Cursos disponiveis: Curso de Java basico, curso de spring boot";
         assertEquals(mensagemEsperada, mensagemRetornada);
     }
-    
+
+    // BDD João
     @Test
     public void deveExibirApenasCursosDaCategoriaSelecionada() {
 
@@ -111,7 +114,42 @@ public class PlataformaTest {
         assertTrue(cursosFiltrados.stream().noneMatch(c -> c.getCategoria().equals(Categoria.FINANCAS)));
         assertTrue(cursosFiltrados.stream().noneMatch(c -> c.getCategoria().equals(Categoria.MARKETING)));
     }
-    
+
+    // BDD Armando
+    @Test
+    public void deveExibirDetalhesCompletosDoCursoAoSelecionar() {
+
+        // DADO que o aluno está autenticado na plataforma
+        Aluno aluno = new Aluno("Armando");
+        PlataformaCursos plataforma = new PlataformaCursos();
+
+        // E existem cursos disponíveis com informações completas
+        Curso cursoDetalhado = new Curso(
+                "Gamificação Aplicada",
+                Categoria.TECNOLOGIA,
+                "Aprenda a aplicar conceitos de jogos para engajar usuários.",
+                40,
+                299.90,
+                "Prof. Joana Mota"
+        );
+
+        // QUANDO o aluno acessa a página de cursos e seleciona um curso específico
+        Curso paginaDeDetalhes = plataforma.selecionarCurso(aluno, cursoDetalhado);
+
+        // ENTÃO ele deve ser redirecionado para a página de detalhes do curso
+        assertNotNull(paginaDeDetalhes, "A página de detalhes não pode ser nula após a seleção.");
+        assertEquals("Gamificação Aplicada", paginaDeDetalhes.getNome());
+
+        // E deve visualizar todas as informações do curso
+        assertEquals("Aprenda a aplicar conceitos de jogos para engajar usuários.", paginaDeDetalhes.getDescricao());
+        assertEquals(40, paginaDeDetalhes.getCargaHoraria());
+        assertEquals(299.90, paginaDeDetalhes.getPreco());
+        assertEquals("Prof. Joana Mota", paginaDeDetalhes.getInstrutor());
+
+        // E ter a opção de assinar o curso
+        assertTrue(paginaDeDetalhes.possuiBotaoDeAssinatura(), "A página de detalhes deve exibir a opção de assinar o curso.");
+    }
+
     @Test
     public void deveExibirOProgressoDoAlunoEmUmCursoInscrito() {
 
@@ -125,7 +163,7 @@ public class PlataformaTest {
         aluno.inscrever(inscricao);
 
         // QUANDO eu clico no curso "Gamificação Aplicada à Educação"
-        
+
         double progressoObtido = aluno.verProgresso(curso);
 
         // ENTÃO eu visualizo o meu progresso nesse curso
