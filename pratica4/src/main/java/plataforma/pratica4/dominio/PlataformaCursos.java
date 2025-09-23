@@ -25,11 +25,17 @@ public class PlataformaCursos {
 	}
 	
 	public List<Curso> filtraPorCategoria(Categoria categoria) {
+		// 1. Garante que temos uma lista de cursos para trabalhar (não será nula)
+		if (this.cursosPublicados == null || this.cursosPublicados.isEmpty()) {
+			return new ArrayList<>(); // Retorna lista vazia se não houver cursos
+		}
 
-		return null;
+		// 2. Usa a API de Streams do Java para filtrar e coletar os resultados
+		return this.cursosPublicados.stream()
+				.filter(curso -> curso.getCategoria() == categoria)
+				.collect(Collectors.toList());
+
+		// return null
     }
-
-	
-	
 
 }
