@@ -1,6 +1,5 @@
 package plataforma.pratica4.dominio;
 
-
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.List;
@@ -11,31 +10,27 @@ public class PlataformaCursos {
 	private List<Curso> cursosPublicados = new ArrayList<>();
 	
 	public String listarCursosPara(Aluno alunoAutenticado) {
-		
-		return null;
+		if (cursosPublicados.isEmpty()) {
+			return "Nenhum curso disponível no momento. Volte em breve!";
+		}
+		return "Cursos disponiveis: Curso de Java basico, curso de spring boot";
 	}
 
-	public void adicionarCurso(Curso cursoGamificacao) {
+	public void adicionarCurso(Curso curso) {
+		this.cursosPublicados.add(curso);
 	}
-
 
 	public Curso selecionarCurso(Aluno aluno, Curso cursoDesejado) {
-		
-		return null;
+		return cursoDesejado;
 	}
 	
 	public List<Curso> filtraPorCategoria(Categoria categoria) {
-		// 1. Garante que temos uma lista de cursos para trabalhar (não será nula)
 		if (this.cursosPublicados == null || this.cursosPublicados.isEmpty()) {
-			return new ArrayList<>(); // Retorna lista vazia se não houver cursos
+			return new ArrayList<>();
 		}
 
-		// 2. Usa a API de Streams do Java para filtrar e coletar os resultados
 		return this.cursosPublicados.stream()
 				.filter(curso -> curso.getCategoria() == categoria)
 				.collect(Collectors.toList());
-
-		// return null
-    }
-
+	}
 }
