@@ -71,7 +71,7 @@ public class PlataformaTest {
     	PlataformaCursos plataforma = new PlataformaCursos();
 
     	
-    	Curso cursoJavaBasico = new Curso("Curso java basico", Categoria.TECNOLOGIA);
+    	Curso cursoJavaBasico = new Curso("Curso de Java basico", Categoria.TECNOLOGIA);
     	Curso cursoSpringBoot = new Curso("Curso de Spring Boot", Categoria.TECNOLOGIA);
         
         plataforma.adicionarCurso(cursoJavaBasico);
@@ -80,7 +80,7 @@ public class PlataformaTest {
         String mensagemRetornada = plataforma.listarCursosPara(alunoAutenticado);
 
         
-        String mensagemEsperada = "Cursos disponiveis: Curso de Java basico, curso de spring boot";
+        String mensagemEsperada = "Cursos disponiveis: Curso de Java basico, Curso de Spring Boot";
         assertEquals(mensagemEsperada, mensagemRetornada);
     }
 
@@ -132,6 +132,7 @@ public class PlataformaTest {
                 299.90,
                 "Prof. Joana Mota"
         );
+        plataforma.adicionarCurso(cursoDetalhado);
 
         // QUANDO o aluno acessa a página de cursos e seleciona um curso específico
         Curso paginaDeDetalhes = plataforma.selecionarCurso(aluno, cursoDetalhado);
@@ -163,7 +164,7 @@ public class PlataformaTest {
         aluno.inscrever(inscricao);
 
         // QUANDO eu clico no curso "Gamificação Aplicada à Educação"
-
+        String nome_aluno = aluno.getNome();
         double progressoObtido = aluno.verProgresso(curso);
 
         // ENTÃO eu visualizo o meu progresso nesse curso
