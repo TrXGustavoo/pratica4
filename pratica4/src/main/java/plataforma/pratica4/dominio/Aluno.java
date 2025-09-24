@@ -20,11 +20,11 @@ public class Aluno {
 	}
 
 	public double verProgresso(Curso curso) {
-		for (Inscricao inscricao : inscricoes) {
-			if (inscricao.getCurso().equals(curso)) {
-				return inscricao.getProgresso();
-			}
-		}
-		return 0;
+        // Refatoração: usa Streams para uma busca mais funcional
+		return inscricoes.stream()
+				.filter(inscricao -> inscricao.getCurso().equals(curso))
+				.mapToDouble(Inscricao::getProgresso)
+				.findFirst()
+				.orElse(0.0); // Retorna 0.0 se não encontrar a inscrição
 	}
 }
