@@ -51,9 +51,8 @@ public class Curso {
         return true;
     }
 
-	public Curso getCurso() {
-		
-		return null;
+    public Curso getCurso() {
+		return this; 
 	}
 
 }
