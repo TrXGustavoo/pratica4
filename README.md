@@ -5,6 +5,7 @@ Repositório utilizado para as Práticas 4 e 6 da disciplina de DevOps.
 ## User Story e BDDs
 User Story Escolhida: COMO aluno QUERO poder visualizar a lista de cursos disponíveis PARA que eu possa escolher qual curso assinar.
 <br>
+<br>
 Integrante: Guilherme<br>
 DADO que sou um aluno<br>
 QUANDO acesso a página principal da plataforma<br>
