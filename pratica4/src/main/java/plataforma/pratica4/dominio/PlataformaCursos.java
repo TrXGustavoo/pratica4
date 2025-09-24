@@ -13,7 +13,13 @@ public class PlataformaCursos {
 		if (cursosPublicados.isEmpty()) {
 			return "Nenhum curso disponível no momento. Volte em breve!";
 		}
-		return "Cursos disponiveis: Curso de Java basico, curso de spring boot";
+		
+        // Refatoração: constrói a string dinamicamente
+		String nomesDosCursos = cursosPublicados.stream()
+				.map(Curso::getNome)
+				.collect(Collectors.joining(", "));
+		
+		return "Cursos disponiveis: " + nomesDosCursos;
 	}
 
 	public void adicionarCurso(Curso curso) {
@@ -21,14 +27,14 @@ public class PlataformaCursos {
 	}
 
 	public Curso selecionarCurso(Aluno aluno, Curso cursoDesejado) {
-		return cursoDesejado;
+        
+        return this.cursosPublicados.stream()
+                .filter(curso -> curso.equals(cursoDesejado))
+                .findFirst()
+                .orElse(null);
 	}
 	
 	public List<Curso> filtraPorCategoria(Categoria categoria) {
-		if (this.cursosPublicados == null || this.cursosPublicados.isEmpty()) {
-			return new ArrayList<>();
-		}
-
 		return this.cursosPublicados.stream()
 				.filter(curso -> curso.getCategoria() == categoria)
 				.collect(Collectors.toList());
