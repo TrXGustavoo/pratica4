@@ -1,9 +1,7 @@
 package plataforma.pratica4.dominio;
 
-
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class Aluno {
 	private String nome;
@@ -21,11 +19,12 @@ public class Aluno {
 		this.inscricoes.add(inscricao);
 	}
 
-
 	public double verProgresso(Curso curso) {
-
+		for (Inscricao inscricao : inscricoes) {
+			if (inscricao.getCurso().equals(curso)) {
+				return inscricao.getProgresso();
+			}
+		}
 		return 0;
 	}
-
 }
-
