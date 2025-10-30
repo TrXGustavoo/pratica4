@@ -1,5 +1,6 @@
 package plataforma.pratica4.dominio;
 
+// Entity
 public class Curso {
 
     private String nome;

@@ -3,6 +3,7 @@ package plataforma.pratica4.dominio;
 import java.util.ArrayList;
 import java.util.List;
 
+// Entity
 public class Aluno {
 	private String nome;
 	private List<Inscricao> inscricoes = new ArrayList<>();
