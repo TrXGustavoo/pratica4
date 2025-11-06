@@ -3,7 +3,7 @@ package plataforma.pratica4.dominio;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.List;
-import java.util.Optional;
+//import java.util.Optional;
 
 public class PlataformaCursos {
 
