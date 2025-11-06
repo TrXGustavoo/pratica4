@@ -1,7 +1,7 @@
 FROM openjdk:17
 
 # Set the working directory in the container
-WORKDIR /projeto_ac2
+WORKDIR /ac2_ca
 
 # Copy the JAR file into the container at /educacaoGamificada
 COPY target/*.jar /ac2_ca/ac2_ca-0.0.1-SNAPSHOT.jar
@@ -10,4 +10,4 @@ COPY target/*.jar /ac2_ca/ac2_ca-0.0.1-SNAPSHOT.jar
 EXPOSE 8585
 
 # Specify the command to run on container start
-CMD ["java", "-jar", "projeto_ac2-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "ac2_ca-0.0.1-SNAPSHOT.jar"]
