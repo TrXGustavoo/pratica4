@@ -2,7 +2,8 @@ package plataforma.pratica4.dominio;
 
 // Entity
 public class Curso {
-
+	
+	// Value Object
     private String nome;
     private Categoria categoria;
     private String descricao;
