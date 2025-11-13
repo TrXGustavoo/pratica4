@@ -109,4 +109,17 @@ public class PlataformaTest {
         // assertTrue(paginaDeDetalhes.possuiBotaoDeAssinatura(), "...");
     }
 
+    @Test
+    public void deveRetornarNuloAoSelecionarCursoInexistente() {
+        PlataformaCursos plataforma = new PlataformaCursos();
+        Curso cursoExistente = new Curso("Java", Categoria.TECNOLOGIA, null, 0, 0.0, null);
+        plataforma.adicionarCurso(cursoExistente);
+        
+        Curso cursoInexistente = new Curso("Python", Categoria.TECNOLOGIA, null, 0, 0.0, null);
+        Aluno aluno = new Aluno("Aluno");
+
+        Curso paginaDestino = plataforma.selecionarCurso(aluno, cursoInexistente);
+
+        org.junit.jupiter.api.Assertions.assertNull(paginaDestino, "Deveria retornar nulo ao selecionar um curso que não existe.");
+    }
 }
