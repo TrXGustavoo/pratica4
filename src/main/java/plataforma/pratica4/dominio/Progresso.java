@@ -7,10 +7,14 @@ public final class Progresso {
     private final double valor;
 
     public Progresso(double valor) {
+        validar(valor);
+        this.valor = valor;
+    }
+
+    private void validar(double valor) {
         if (valor < 0.0 || valor > 100.0) {
             throw new IllegalArgumentException("O valor do progresso deve estar entre 0 e 100.");
         }
-        this.valor = valor;
     }
 
     public double getValor() {
@@ -19,10 +23,10 @@ public final class Progresso {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Progresso progresso = (Progresso) o;
-        return Double.compare(progresso.valor, valor) == 0;
+        if (o instanceof Progresso p) {
+            return Double.compare(p.valor, valor) == 0;
+        }
+        return false;
     }
 
     @Override
