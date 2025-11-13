@@ -85,4 +85,7 @@ public class Curso {
     public boolean possuiBotaoDeAssinatura() {
         return true;
     }
+    public Curso getCurso() {
+        return this;
+    }
 }
