@@ -1,10 +1,29 @@
 package plataforma.pratica4.dominio;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Data
+@NoArgsConstructor
+
 // Entity
 public class Curso {
 	
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Enumerated(EnumType.STRING) // Grava o nome do Enum (TECNOLOGIA) no DB
+	
 	// Value Object
-    private String nome;
+    
+	private String nome;
+    private Long id;
     private Categoria categoria;
     private String descricao;
     private int cargaHoraria;

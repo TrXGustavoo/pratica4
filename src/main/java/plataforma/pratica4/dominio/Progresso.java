@@ -2,6 +2,17 @@ package plataforma.pratica4.dominio;
 
 import java.util.Objects;
 
+import jakarta.persistence.Embeddable;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+
+@Embeddable // 1. Para o JPA embutir na entidade (ex: Inscricao) 
+@Getter // 2. Gera o getValor() 
+@NoArgsConstructor(access = lombok.AccessLevel.PROTECTED) // 3. Necessário para o JPA 
+@EqualsAndHashCode // 4. Para a lógica de Value Object [cite: 113, 114, 125]
+
 public final class Progresso {
 
     private final double valor;

@@ -1,12 +1,30 @@
 package plataforma.pratica4.dominio;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 // Entity
+@Entity // Define como uma entidade JPA
+@Data // Gera Getters, Setters, ToString, EqualsAndHashCode
+@NoArgsConstructor
+
 public class Aluno {
 	
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+	
+	@OneToMany(mappedBy = "aluno") // Ajustar 'mappedBy' conforme a entidade Inscricao	
 	// Value Object 
 	private String nome;
 	private List<Inscricao> inscricoes = new ArrayList<>();
