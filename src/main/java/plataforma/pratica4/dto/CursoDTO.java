@@ -3,7 +3,7 @@ package plataforma.pratica4.dto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import plataforma.pratica4.dominio.Curso;
-import plataforma.pratica4.dominio.Categoria;
+// import plataforma.pratica4.dominio.Categoria;
 
 @Data
 @NoArgsConstructor

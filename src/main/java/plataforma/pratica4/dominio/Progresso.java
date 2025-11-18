@@ -1,6 +1,6 @@
 package plataforma.pratica4.dominio;
 
-import java.util.Objects;
+//import java.util.Objects;
 import jakarta.persistence.Embeddable;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
