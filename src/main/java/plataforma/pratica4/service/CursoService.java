@@ -1,23 +1,22 @@
 package plataforma.pratica4.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import lombok.RequiredArgsConstructor; 
 
 import plataforma.pratica4.dominio.Curso;
 import plataforma.pratica4.dominio.Categoria;
 import plataforma.pratica4.dto.CursoDTO;
 import plataforma.pratica4.repository.CursoRepository;
 
-import lombok.RequiredArgsConstructor;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor // GERA o construtor necessário para injetar a dependência 'final'
 public class CursoService {
 
+    // 2. Usar 'final' para garantir que a dependência seja setada apenas no construtor
     private final CursoRepository cursoRepository;
 
     /**
@@ -43,8 +42,6 @@ public class CursoService {
      * Salva um novo curso.
      */
     public Curso criarCurso(Curso curso) {
-        // Aqui você poderia adicionar regras de negócio antes de salvar
-        // Ex: Validar se já existe um curso com o mesmo nome
         return cursoRepository.save(curso);
     }
 
