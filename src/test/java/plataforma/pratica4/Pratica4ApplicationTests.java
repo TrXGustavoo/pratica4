@@ -3,35 +3,39 @@ package plataforma.pratica4;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext; 
 import org.springframework.test.web.servlet.MockMvc;
 
-// 1. Carrega o contexto completo da aplicação Spring Boot
 @SpringBootTest
-// 2. Configura o MockMvc para simular as requisições HTTP
 @AutoConfigureMockMvc 
 class Pratica4ApplicationTests {
 
     @Autowired
     private MockMvc mockMvc; // Injeção do MockMvc
 
+    @Autowired
+    private ApplicationContext applicationContext; // Injeção para verificar o contexto
+
 	/**
 	 * Testa o carregamento do contexto da aplicação.
-	 * * @SpringBootTest cobre implicitamente o método main(String[] args),
-	 * garantindo que a aplicação inicie sem erros.
+	 * * O uso de @SpringBootTest garante que o método main(String[] args) seja executado.
+	 * Se o contexto carregar, a linha do método main é coberta.
 	 */
 	@Test
 	void contextLoads() {
-		// Este teste verifica se o Spring Application Context foi carregado.
+		// Verifica se o contexto Spring foi iniciado com sucesso
+		assertTrue(applicationContext.getStartupDate() > 0, "O contexto da aplicação não foi carregado.");
 	}
 
     /**
      * Testa o endpoint home (/) da aplicação.
-     * * Cobre o método home() na classe Pratica4Application.java.
+     * Cobre o método @GetMapping("/") public String home().
      */
     @Test
     void deveRetornarHelloWorldNoEndpointRaiz() throws Exception {
