@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationContext; 
+import org.springframework.context.ApplicationContext;
 import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
@@ -17,15 +17,14 @@ import org.springframework.test.web.servlet.MockMvc;
 class Pratica4ApplicationTests {
 
     @Autowired
-    private MockMvc mockMvc; // Injeção do MockMvc
+    private MockMvc mockMvc;
 
     @Autowired
-    private ApplicationContext applicationContext; // Injeção para verificar o contexto
+    private ApplicationContext applicationContext;
 
 	/**
-	 * Testa o carregamento do contexto da aplicação.
-	 * * O uso de @SpringBootTest garante que o método main(String[] args) seja executado.
-	 * Se o contexto carregar, a linha do método main é coberta.
+	 * Garante a cobertura do método main(String[] args).
+	 * O @SpringBootTest garante que o SpringApplication.run() seja executado.
 	 */
 	@Test
 	void contextLoads() {
@@ -34,15 +33,13 @@ class Pratica4ApplicationTests {
 	}
 
     /**
-     * Testa o endpoint home (/) da aplicação.
-     * Cobre o método @GetMapping("/") public String home().
+     * Garante a cobertura do método @GetMapping("/") public String home().
      */
     @Test
     void deveRetornarHelloWorldNoEndpointRaiz() throws Exception {
-        // Simula uma requisição GET para o endpoint "/"
         mockMvc.perform(get("/"))
-                .andExpect(status().isOk()) // Espera status HTTP 200
-                .andExpect(content().string("Hello World")); // Espera a string exata de retorno
+                .andExpect(status().isOk()) 
+                .andExpect(content().string("Hello World")); 
     }
 
 }
