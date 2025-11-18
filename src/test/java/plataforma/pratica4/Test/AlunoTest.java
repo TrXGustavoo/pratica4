@@ -31,11 +31,13 @@ public class AlunoTest {
 
     @Test
     public void deveRetornarProgressoCorretoDoCurso() {
-        Inscricao inscricaoJava = new Inscricao(cursoJava);
+        // 1. CORREÇÃO: Passar 'aluno' para o construtor
+        Inscricao inscricaoJava = new Inscricao(aluno, cursoJava);
         inscricaoJava.atualizarProgresso(new Progresso(50.0));
         aluno.inscrever(inscricaoJava);
 
-        Inscricao inscricaoPython = new Inscricao(cursoPython);
+        // 2. CORREÇÃO: Passar 'aluno' para o construtor
+        Inscricao inscricaoPython = new Inscricao(aluno, cursoPython);
         inscricaoPython.atualizarProgresso(new Progresso(25.0));
         aluno.inscrever(inscricaoPython);
 
@@ -46,7 +48,8 @@ public class AlunoTest {
 
     @Test
     public void deveRetornarProgressoZeroParaCursoNaoInscritoMesmoTendoOutrasInscricoes() {
-        Inscricao inscricaoJava = new Inscricao(cursoJava);
+        // 3. CORREÇÃO: Passar 'aluno' para o construtor
+        Inscricao inscricaoJava = new Inscricao(aluno, cursoJava);
         inscricaoJava.atualizarProgresso(new Progresso(50.0));
         aluno.inscrever(inscricaoJava);
 

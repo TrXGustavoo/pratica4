@@ -2,6 +2,7 @@ package plataforma.pratica4.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue; // Importar
 
 import org.junit.jupiter.api.Test;
 
@@ -9,21 +10,28 @@ import plataforma.pratica4.dominio.Aluno;
 import plataforma.pratica4.dominio.Categoria;
 import plataforma.pratica4.dominio.PlataformaCursos;
 import plataforma.pratica4.dominio.Curso;
+import plataforma.pratica4.dominio.Inscricao; // Importar
+import plataforma.pratica4.dominio.Progresso; // Importar
+import java.util.List; // Importar
 
 public class PlataformaTest {
 
-    // BDD Gustavo - Sem alterações
+    // BDD Gustavo
     @Test
     public void deveExibirMensagemQuandoNaoExistemCursosDisponiveis() {
-        // ... (código inalterado) ...
+        Aluno alunoAutenticado = new Aluno("João da Silva");
+        PlataformaCursos plataforma = new PlataformaCursos();
+        String mensagemRetornada = plataforma.listarCursosPara(alunoAutenticado);
+        String mensagemEsperada = "Nenhum curso disponível no momento. Volte em breve!";
+        assertEquals(mensagemEsperada, mensagemRetornada);
     }
 
-    // BDD Giovana - AJUSTE AQUI
+    // BDD Giovana
     @Test
     public void deveRedirecionarParaPaginaDeDetalhesAoClicarNoCurso() {
         PlataformaCursos plataforma = new PlataformaCursos();
-        Curso cursoDesejado = new Curso("Gamificação Aplicada à Educação", Categoria.TECNOLOGIA, null, 0, 0.0, null);
-        Curso outroCurso = new Curso("Java Básico", Categoria.TECNOLOGIA, null, 0, 0.0, null);
+        Curso cursoDesejado = new Curso("Gamificação Aplicada à Educação", Categoria.TECNOLOGIA);
+        Curso outroCurso = new Curso("Java Básico", Categoria.TECNOLOGIA);
         
         plataforma.adicionarCurso(cursoDesejado);
         plataforma.adicionarCurso(outroCurso);
@@ -33,23 +41,19 @@ public class PlataformaTest {
         Curso paginaDestino = plataforma.selecionarCurso(aluno, cursoDesejado);
 
         assertNotNull(paginaDestino, "A página de destino não deveria ser nula.");
-        
-        // AJUSTE: Removido o ".getCurso()" redundante
         assertEquals("Gamificação Aplicada à Educação", paginaDestino.getNome());
-
-        // AJUSTE: Removida a asserção de UI
-        // assertTrue(paginaDestino.possuiBotaoDeAssinatura(), "...");
+        // A asserção sobre o botão foi removida (não é responsabilidade do domínio)
     }
 
-    // BDD Guilherme - Sem alterações
+    // BDD Guilherme
     @Test
     public void deveListarCursosQuandoExitemCursosDisponiveis() {
-        // ... (código inalterado, mas precisa instanciar Curso com todos os args) ...
-        Aluno alunoAutenticado = new Aluno("João da Silva");
+    	Aluno alunoAutenticado = new Aluno("João da Silva");
     	PlataformaCursos plataforma = new PlataformaCursos();
 
-    	Curso cursoJavaBasico = new Curso("Curso de Java basico", Categoria.TECNOLOGIA, null, 0, 0.0, null);
-    	Curso cursoSpringBoot = new Curso("Curso de Spring Boot", Categoria.TECNOLOGIA, null, 0, 0.0, null);
+        // Usar o construtor que temos
+    	Curso cursoJavaBasico = new Curso("Curso de Java basico", Categoria.TECNOLOGIA);
+    	Curso cursoSpringBoot = new Curso("Curso de Spring Boot", Categoria.TECNOLOGIA);
         
         plataforma.adicionarCurso(cursoJavaBasico);
         plataforma.adicionarCurso(cursoSpringBoot);
@@ -60,26 +64,31 @@ public class PlataformaTest {
         assertEquals(mensagemEsperada, mensagemRetornada);
     }
 
-    // BDD João - Sem alterações
+    // BDD João
     @Test
     public void deveExibirApenasCursosDaCategoriaSelecionada() {
-        // ... (código inalterado, mas precisa instanciar Curso com todos os args) ...
-        PlataformaCursos plataforma = new PlataformaCursos();
+        PlataformaCursos paginaDeCursos = new PlataformaCursos();
 
-        Curso cursoJava = new Curso("Java para Web", Categoria.TECNOLOGIA, null, 0, 0.0, null);
-        Curso cursoPython = new Curso("Python para Data Science", Categoria.TECNOLOGIA, null, 0, 0.0, null);
-        Curso cursoInvestimentos = new Curso("Investimentos na Bolsa", Categoria.FINANCAS, null, 0, 0.0, null);
-        Curso cursoMarketingDigital = new Curso("Marketing Digital Essencial", Categoria.MARKETING, null, 0, 0.0, null);
+        Curso cursoJava = new Curso("Java para Web", Categoria.TECNOLOGIA);
+        Curso cursoPython = new Curso("Python para Data Science", Categoria.TECNOLOGIA);
+        Curso cursoInvestimentos = new Curso("Investimentos na Bolsa", Categoria.FINANCAS);
+        Curso cursoMarketingDigital = new Curso("Marketing Digital Essencial", Categoria.MARKETING);
 
-        plataforma.adicionarCurso(cursoJava);
-        plataforma.adicionarCurso(cursoPython);
-        plataforma.adicionarCurso(cursoInvestimentos);
-        plataforma.adicionarCurso(cursoMarketingDigital);
-        
-        // ... (resto do teste inalterado) ...
+        paginaDeCursos.adicionarCurso(cursoJava);
+        paginaDeCursos.adicionarCurso(cursoPython);
+        paginaDeCursos.adicionarCurso(cursoInvestimentos);
+        paginaDeCursos.adicionarCurso(cursoMarketingDigital);
+
+        List<Curso> cursosFiltrados = paginaDeCursos.filtraPorCategoria(Categoria.TECNOLOGIA);
+
+        assertEquals(2, cursosFiltrados.size());
+        assertTrue(cursosFiltrados.stream().anyMatch(c -> c.getNome().equals("Java para Web")));
+        assertTrue(cursosFiltrados.stream().anyMatch(c -> c.getNome().equals("Python para Data Science")));
+        assertTrue(cursosFiltrados.stream().noneMatch(c -> c.getCategoria().equals(Categoria.FINANCAS)));
+        assertTrue(cursosFiltrados.stream().noneMatch(c -> c.getCategoria().equals(Categoria.MARKETING)));
     }
 
-    // BDD Armando - AJUSTE AQUI
+    // BDD Armando 
     @Test
     public void deveExibirDetalhesCompletosDoCursoAoSelecionar() {
         Aluno aluno = new Aluno("Armando");
@@ -95,27 +104,44 @@ public class PlataformaTest {
         );
         plataforma.adicionarCurso(cursoDetalhado);
 
-        Curso paginaDeDetalhes = plataforma.selecionarCurso(aluno, cursoDetalhado);
+        // A variável correta é 'paginaDestino'
+        Curso paginaDestino = plataforma.selecionarCurso(aluno, cursoDetalhado);
 
-        assertNotNull(paginaDeDetalhes, "A página de detalhes não pode ser nula após a seleção.");
-        assertEquals("Gamificação Aplicada", paginaDeDetalhes.getNome());
-        assertEquals("Aprenda a aplicar conceitos de jogos para engajar usuários.", paginaDeDetalhes.getDescricao());
-        assertEquals(40, paginaDeDetalhes.getCargaHoraria());
-
-        assertEquals(299.90, paginaDeDetalhes.getPreco(), 0.001);
-        assertEquals("Prof. Joana Mota", paginaDeDetalhes.getInstrutor());
-
-        // AJUSTE: Removida a asserção de UI
-        // assertTrue(paginaDeDetalhes.possuiBotaoDeAssinatura(), "...");
+        assertNotNull(paginaDestino, "A página de destino não pode ser nula após a seleção.");
+        
+        // CORREÇÃO: Alterado de 'paginaDeDetalhes' para 'paginaDestino'
+        assertEquals("Gamificação Aplicada", paginaDestino.getNome());
+        assertEquals("Aprenda a aplicar conceitos de jogos para engajar usuários.", paginaDestino.getDescricao());
+        assertEquals(40, paginaDestino.getCargaHoraria());
+        assertEquals(299.90, paginaDestino.getPreco(), 0.001);
+        assertEquals("Prof. Joana Mota", paginaDestino.getInstrutor());
     }
 
+    // Teste de Progresso (Corrigido)
+    @Test
+    public void deveExibirOProgressoDoAlunoEmUmCursoInscrito() {
+        Aluno aluno = new Aluno("João da Silva");
+        Curso curso = new Curso("Gamificação Aplicada à Educação", Categoria.TECNOLOGIA);
+        
+        // CORREÇÃO: Usar o construtor de Inscrição correto
+        Inscricao inscricao = new Inscricao(aluno, curso); 
+
+        inscricao.atualizarProgresso(new Progresso(45.0)); 
+        aluno.inscrever(inscricao);
+        
+        double progressoObtido = aluno.verProgresso(curso);
+
+        assertEquals(45.0, progressoObtido, 0.001);
+    }
+    
+    // Teste de Branch (Corrigido)
     @Test
     public void deveRetornarNuloAoSelecionarCursoInexistente() {
         PlataformaCursos plataforma = new PlataformaCursos();
-        Curso cursoExistente = new Curso("Java", Categoria.TECNOLOGIA, null, 0, 0.0, null);
+        Curso cursoExistente = new Curso("Java", Categoria.TECNOLOGIA);
         plataforma.adicionarCurso(cursoExistente);
         
-        Curso cursoInexistente = new Curso("Python", Categoria.TECNOLOGIA, null, 0, 0.0, null);
+        Curso cursoInexistente = new Curso("Python", Categoria.TECNOLOGIA);
         Aluno aluno = new Aluno("Aluno");
 
         Curso paginaDestino = plataforma.selecionarCurso(aluno, cursoInexistente);
