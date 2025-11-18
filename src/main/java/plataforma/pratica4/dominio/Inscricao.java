@@ -12,33 +12,24 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-
 public class Inscricao {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne // Muitas inscrições para um curso
-	
+	@ManyToOne
 	private Aluno aluno;
-    private final Curso curso;
     
-    @Embedded // Incorpora o Value Object Progresso
+    private Curso curso;
+    
+    @Embedded
     private Progresso progresso;
 
-    public Inscricao(Curso curso) {
+    public Inscricao(Aluno aluno, Curso curso) {
+        this.aluno = aluno; // Corrigido para receber Aluno
         this.curso = curso;
-        this.aluno = aluno;
         this.progresso = new Progresso(0.0);
-    }
-
-    public Curso getCurso() {
-        return curso;
-    }
-
-    public Progresso getProgresso() {
-        return progresso;
     }
 
     public void atualizarProgresso(Progresso novoProgresso) {

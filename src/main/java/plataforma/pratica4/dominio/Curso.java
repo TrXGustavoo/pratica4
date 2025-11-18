@@ -12,19 +12,16 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-
-// Entity
 public class Curso {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Enumerated(EnumType.STRING) // Grava o nome do Enum (TECNOLOGIA) no DB
-	
-	// Value Object
+    private Long id;
+
+    @Enumerated(EnumType.STRING)
+	private Categoria categoria;
     
 	private String nome;
-    private Long id;
-    private Categoria categoria;
     private String descricao;
     private int cargaHoraria;
     private double preco;
@@ -44,36 +41,12 @@ public class Curso {
         this.instrutor = instrutor;
     }
 
-    public String getNome() {
-        return this.nome;
-    }
-    
-    public Categoria getCategoria() {
-        return categoria;
-    }
+    // Todos os 6 getters manuais foram REMOVIDOS (o @Data já cria)
+    // 'public String getNome()', 'getCategoria()', 'getDescricao()', etc.
 
-    public String getDescricao() {
-        return descricao;
-    }
+    // Método de UI, REMOVIDO da entidade de domínio
+    // public boolean possuiBotaoDeAssinatura() { ... }
 
-    public int getCargaHoraria() {
-        return cargaHoraria;
-    }
-
-    public double getPreco() {
-        return preco;
-    }
-
-    public String getInstrutor() {
-        return instrutor;
-    }
-
-    public boolean possuiBotaoDeAssinatura() {
-        return true;
-    }
-
-    public Curso getCurso() {
-		return this; 
-	}
-
+    // Método redundante, REMOVIDO
+    // public Curso getCurso() { ... }
 }
