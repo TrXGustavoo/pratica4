@@ -3,36 +3,45 @@ package plataforma.pratica4.dominio;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-// Entity
+@Entity
+@Data
+@NoArgsConstructor
 public class Aluno {
 	
-	// Value Object 
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+	
 	private String nome;
+	
+	@OneToMany(mappedBy = "aluno") 
 	private List<Inscricao> inscricoes = new ArrayList<>();
 
 	public Aluno(String nome) {
 		this.nome = nome;
 	}
 
-	public String getNome() {
-		return nome;
-	}
+	// O 'getNome()' foi REMOVIDO (o @Data já cria)
 
 	public void inscrever(Inscricao inscricao) {
 		this.inscricoes.add(inscricao);
 	}
 
 	public double verProgresso(Curso curso) {
-		// Correção aqui:
-		// 1. Primeiro, usamos .map() para obter o objeto Progresso da inscrição.
-		// 2. Depois, usamos .mapToDouble() para extrair o valor double de dentro do objeto Progresso.
 		return inscricoes.stream()
 				.filter(inscricao -> inscricao.getCurso().equals(curso))
-				.findFirst() // Encontra a inscrição primeiro
-				.map(Inscricao::getProgresso) // Mapeia para o objeto Progresso
-				.map(Progresso::getValor) // Extrai o valor double do progresso
-				.orElse(0.0); // Retorna 0.0 se não encontrar a inscrição
+				.findFirst() 
+				.map(Inscricao::getProgresso) 
+				.map(Progresso::getValor) 
+				.orElse(0.0); 
 	}
 
 	public Optional<Progresso> getProgresso(Curso curso) {

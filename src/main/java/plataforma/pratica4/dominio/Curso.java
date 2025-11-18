@@ -1,11 +1,27 @@
 package plataforma.pratica4.dominio;
 
-// Entity
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Data
+@NoArgsConstructor
 public class Curso {
 	
-	// Value Object
-    private String nome;
-    private Categoria categoria;
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Enumerated(EnumType.STRING)
+	private Categoria categoria;
+    
+	private String nome;
     private String descricao;
     private int cargaHoraria;
     private double preco;
@@ -25,36 +41,12 @@ public class Curso {
         this.instrutor = instrutor;
     }
 
-    public String getNome() {
-        return this.nome;
-    }
-    
-    public Categoria getCategoria() {
-        return categoria;
-    }
+    // Todos os 6 getters manuais foram REMOVIDOS (o @Data já cria)
+    // 'public String getNome()', 'getCategoria()', 'getDescricao()', etc.
 
-    public String getDescricao() {
-        return descricao;
-    }
+    // Método de UI, REMOVIDO da entidade de domínio
+    // public boolean possuiBotaoDeAssinatura() { ... }
 
-    public int getCargaHoraria() {
-        return cargaHoraria;
-    }
-
-    public double getPreco() {
-        return preco;
-    }
-
-    public String getInstrutor() {
-        return instrutor;
-    }
-
-    public boolean possuiBotaoDeAssinatura() {
-        return true;
-    }
-
-    public Curso getCurso() {
-		return this; 
-	}
-
+    // Método redundante, REMOVIDO
+    // public Curso getCurso() { ... }
 }

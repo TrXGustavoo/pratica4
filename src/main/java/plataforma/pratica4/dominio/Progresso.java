@@ -1,10 +1,18 @@
 package plataforma.pratica4.dominio;
 
-import java.util.Objects;
+//import java.util.Objects;
+import jakarta.persistence.Embeddable;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Embeddable 
+@Getter 
+@NoArgsConstructor(access = lombok.AccessLevel.PROTECTED) 
+@EqualsAndHashCode 
 public final class Progresso {
 
-    private final double valor;
+    private double valor;
 
     public Progresso(double valor) {
         if (valor < 0.0 || valor > 100.0) {
@@ -13,22 +21,9 @@ public final class Progresso {
         this.valor = valor;
     }
 
-    public double getValor() {
-        return valor;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Progresso progresso = (Progresso) o;
-        return Double.compare(progresso.valor, valor) == 0;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(valor);
-    }
+    // O 'getValor()' foi REMOVIDO (o @Getter já cria)
+    // O 'equals(Object o)' foi REMOVIDO (o @EqualsAndHashCode já cria)
+    // O 'hashCode()' foi REMOVIDO (o @EqualsAndHashCode já cria)
 
     @Override
     public String toString() {
