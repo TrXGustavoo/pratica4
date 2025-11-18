@@ -6,6 +6,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.times;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -19,33 +20,76 @@ import plataforma.pratica4.dominio.Curso;
 import plataforma.pratica4.dto.CursoDTO;
 import plataforma.pratica4.repository.CursoRepository;
 
-@ExtendWith(MockitoExtension.class) // Habilita o uso de anotações @Mock e @InjectMocks sem Spring
+@ExtendWith(MockitoExtension.class)
 public class CursoServiceTest {
 
-    @Mock // Cria um "dublê" do repositório
+    @Mock
     private CursoRepository cursoRepository;
 
-    @InjectMocks // Injeta o mock acima dentro da instância real do Service
+    @InjectMocks
     private CursoService cursoService;
 
+    // --- Cobertura do Caminho Feliz de ListarTodos (Já existia, mas completo) ---
     @Test
     public void deveListarTodosOsCursosConvertidosParaDTO() {
-        // Cenário
         Curso curso1 = new Curso("Java", Categoria.TECNOLOGIA);
-        // Precisamos setar IDs pois o mock não gera IDs automáticos como o banco
-        // (Poderíamos usar Reflection ou um setter de teste se necessário, mas aqui o foco é a lista)
+        curso1.setId(1L); // Adicionar ID para o DTO
         
-        when(cursoRepository.findAll()).thenReturn(Arrays.asList(curso1)); // Define comportamento do Mock
+        when(cursoRepository.findAll()).thenReturn(Arrays.asList(curso1)); 
 
-        // Ação
         List<CursoDTO> resultado = cursoService.listarTodos();
 
-        // Verificação
         assertEquals(1, resultado.size());
         assertEquals("Java", resultado.get(0).getNome());
-        assertEquals("TECNOLOGIA", resultado.get(0).getCategoria());
-        
-        // Verifica se o repositório foi chamado exatamente uma vez
         verify(cursoRepository, times(1)).findAll();
+    }
+    
+    // --- Cobertura da Ramificação: Lista Vazia em ListarTodos ---
+    @Test
+    public void deveRetornarListaVaziaQuandoNaoHaCursos() {
+        when(cursoRepository.findAll()).thenReturn(Collections.emptyList());
+
+        List<CursoDTO> resultado = cursoService.listarTodos();
+
+        assertEquals(0, resultado.size());
+        verify(cursoRepository, times(1)).findAll();
+    }
+
+    // --- Cobertura da Ramificação: Filtro de Categoria com Sucesso ---
+    @Test
+    public void deveFiltrarCursosPorCategoriaComSucesso() {
+        Curso cursoTec = new Curso("Tech Course", Categoria.TECNOLOGIA);
+        cursoTec.setId(2L);
+        
+        when(cursoRepository.findByCategoria(Categoria.TECNOLOGIA)).thenReturn(Arrays.asList(cursoTec));
+        
+        List<CursoDTO> resultado = cursoService.buscarPorCategoria(Categoria.TECNOLOGIA);
+        
+        assertEquals(1, resultado.size());
+        assertEquals("Tech Course", resultado.get(0).getNome());
+        verify(cursoRepository, times(1)).findByCategoria(Categoria.TECNOLOGIA);
+    }
+    
+    // --- Cobertura da Ramificação: Filtro de Categoria Vazio ---
+    @Test
+    public void deveRetornarListaVaziaAoFiltrarSemResultados() {
+        when(cursoRepository.findByCategoria(Categoria.MARKETING)).thenReturn(Collections.emptyList());
+        
+        List<CursoDTO> resultado = cursoService.buscarPorCategoria(Categoria.MARKETING);
+        
+        assertEquals(0, resultado.size());
+        verify(cursoRepository, times(1)).findByCategoria(Categoria.MARKETING);
+    }
+    
+    // --- Cobertura Adicional (Método Salvar) ---
+    @Test
+    public void deveSalvarUmNovoCurso() {
+        Curso novoCurso = new Curso("Novo", Categoria.TECNOLOGIA);
+        when(cursoRepository.save(novoCurso)).thenReturn(novoCurso);
+
+        Curso salvo = cursoService.criarCurso(novoCurso);
+        
+        assertEquals("Novo", salvo.getNome());
+        verify(cursoRepository, times(1)).save(novoCurso);
     }
 }
