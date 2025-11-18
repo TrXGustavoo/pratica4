@@ -9,17 +9,18 @@ import plataforma.pratica4.dominio.Inscricao;
 import plataforma.pratica4.repository.AlunoRepository;
 import plataforma.pratica4.repository.CursoRepository;
 
+import lombok.RequiredArgsConstructor;
+
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class AlunoService {
 
-    @Autowired
-    private AlunoRepository alunoRepository;
+    private final AlunoRepository alunoRepository;
     
-    @Autowired
-    private CursoRepository cursoRepository; // Necessário para buscar o curso na inscrição
+    private final CursoRepository cursoRepository; // Necessário para buscar o curso na inscrição
 
     public List<Aluno> listarTodos() {
         return alunoRepository.findAll();

@@ -8,15 +8,17 @@ import plataforma.pratica4.dominio.Categoria;
 import plataforma.pratica4.dto.CursoDTO;
 import plataforma.pratica4.repository.CursoRepository;
 
+import lombok.RequiredArgsConstructor;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class CursoService {
 
-    @Autowired
-    private CursoRepository cursoRepository;
+    private final CursoRepository cursoRepository;
 
     /**
      * Retorna uma lista de todos os cursos convertidos para DTO.

@@ -10,7 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
-// 1. Carrega o contexto completo da aplicação
+// 1. Carrega o contexto completo da aplicação Spring Boot
 @SpringBootTest
 // 2. Configura o MockMvc para simular as requisições HTTP
 @AutoConfigureMockMvc 
@@ -20,17 +20,18 @@ class Pratica4ApplicationTests {
     private MockMvc mockMvc; // Injeção do MockMvc
 
 	/**
-	 * Garante que o contexto da aplicação Spring Boot carregue corretamente.
-	 * Cobre o método main e a configuração da classe.
+	 * Testa o carregamento do contexto da aplicação.
+	 * * @SpringBootTest cobre implicitamente o método main(String[] args),
+	 * garantindo que a aplicação inicie sem erros.
 	 */
 	@Test
 	void contextLoads() {
-		// Este teste apenas verifica se não há exceções ao iniciar a aplicação.
+		// Este teste verifica se o Spring Application Context foi carregado.
 	}
 
     /**
-     * Testa o endpoint home (/) para garantir que ele retorne "Hello World".
-     * Cobre o método home() e atinge 100% de Branch Coverage para ele.
+     * Testa o endpoint home (/) da aplicação.
+     * * Cobre o método home() na classe Pratica4Application.java.
      */
     @Test
     void deveRetornarHelloWorldNoEndpointRaiz() throws Exception {
