@@ -3,41 +3,43 @@ package plataforma.pratica4;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
 import org.springframework.test.web.servlet.MockMvc;
 
-// 1. Carrega o contexto completo da aplicação
 @SpringBootTest
-// 2. Configura o MockMvc para simular as requisições HTTP
 @AutoConfigureMockMvc 
 class Pratica4ApplicationTests {
 
     @Autowired
-    private MockMvc mockMvc; // Injeção do MockMvc
+    private MockMvc mockMvc;
+
+    @Autowired
+    private ApplicationContext applicationContext;
 
 	/**
-	 * Garante que o contexto da aplicação Spring Boot carregue corretamente.
-	 * Cobre o método main e a configuração da classe.
+	 * Garante a cobertura do método main(String[] args).
+	 * O @SpringBootTest garante que o SpringApplication.run() seja executado.
 	 */
 	@Test
 	void contextLoads() {
-		// Este teste apenas verifica se não há exceções ao iniciar a aplicação.
+		// Verifica se o contexto Spring foi iniciado com sucesso
+		assertTrue(applicationContext.getStartupDate() > 0, "O contexto da aplicação não foi carregado.");
 	}
 
     /**
-     * Testa o endpoint home (/) para garantir que ele retorne "Hello World".
-     * Cobre o método home() e atinge 100% de Branch Coverage para ele.
+     * Garante a cobertura do método @GetMapping("/") public String home().
      */
     @Test
     void deveRetornarHelloWorldNoEndpointRaiz() throws Exception {
-        // Simula uma requisição GET para o endpoint "/"
         mockMvc.perform(get("/"))
-                .andExpect(status().isOk()) // Espera status HTTP 200
-                .andExpect(content().string("Hello World")); // Espera a string exata de retorno
+                .andExpect(status().isOk()) 
+                .andExpect(content().string("Hello World")); 
     }
 
 }

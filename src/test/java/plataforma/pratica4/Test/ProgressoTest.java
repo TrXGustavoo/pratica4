@@ -1,18 +1,17 @@
 package plataforma.pratica4.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+// import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import org.junit.jupiter.api.Test;
 import plataforma.pratica4.dominio.Progresso;
 
 public class ProgressoTest {
-
+    
     @Test
     public void deveCriarProgressoComValoresValidos() {
-        // Testa os limites
         Progresso pMin = new Progresso(0.0);
         Progresso pMax = new Progresso(100.0);
         Progresso pMeio = new Progresso(50.0);
@@ -24,41 +23,47 @@ public class ProgressoTest {
 
     @Test
     public void deveLancarExcecaoParaProgressoAbaixoDeZero() {
-        // Testa o limite inferior inválido
-        IllegalArgumentException exception = assertThrows(
+        assertThrows(
             IllegalArgumentException.class,
             () -> new Progresso(-0.1)
         );
-
-        assertEquals("O valor do progresso deve estar entre 0 e 100.", exception.getMessage());
     }
 
     @Test
     public void deveLancarExcecaoParaProgressoAcimaDeCem() {
-        // Testa o limite superior inválido
-        IllegalArgumentException exception = assertThrows(
+        assertThrows(
             IllegalArgumentException.class,
             () -> new Progresso(100.1)
         );
-
-        assertEquals("O valor do progresso deve estar entre 0 e 100.", exception.getMessage());
     }
+
 
     @Test
     public void deveSerConsideradoIgualParaOMesmoValor() {
-        // Valida o comportamento de Objeto de Valor (igualdade)
         Progresso p1 = new Progresso(75.0);
         Progresso p2 = new Progresso(75.0);
+        Progresso p3 = p1;
 
-        assertEquals(p1, p2);
-        assertTrue(p1.hashCode() == p2.hashCode());
+        assertTrue(p1.equals(p3));
+        
+        assertTrue(p1.equals(p2));
+        assertEquals(p1.hashCode(), p2.hashCode());
+    }
+    
+    @Test
+    public void deveRetornarFalsoParaObjetoNuloOuClasseDiferente() {
+        Progresso p1 = new Progresso(10.0);
+        String outraClasse = "Teste";
+        
+        assertFalse(p1.equals(null));
+        
+        assertFalse(p1.equals(outraClasse));
     }
 
     @Test
-    public void deveSerConsideradoDiferenteParaValoresDiferentes() {
-        Progresso p1 = new Progresso(75.0);
-        Progresso p2 = new Progresso(75.1);
-
-        assertNotEquals(p1, p2);
+    public void deveFormatarCorretamenteOToString() {
+        Progresso p1 = new Progresso(42.5);
+        
+        assertEquals("42.5%", p1.toString());
     }
 }

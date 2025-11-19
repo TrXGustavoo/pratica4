@@ -2,6 +2,7 @@ package plataforma.pratica4.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+// import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
 
@@ -9,46 +10,69 @@ import plataforma.pratica4.dominio.Categoria;
 import plataforma.pratica4.dominio.Curso;
 import plataforma.pratica4.dominio.Inscricao;
 import plataforma.pratica4.dominio.Progresso;
-import plataforma.pratica4.dominio.Aluno; // 1. Importar Aluno
+import plataforma.pratica4.dominio.Aluno; 
 
 public class InscricaoTest {
 
-    @Test
-    public void deveCriarInscricaoComProgressoZero() {
-        // 2. Criar Aluno e Curso
+    // Helper para criar um Aluno simples
+    private Aluno criarAluno() {
         Aluno aluno = new Aluno("Aluno Teste");
-        Curso curso = new Curso("Curso de Java", Categoria.TECNOLOGIA, null, 0, 0.0, null);
-        
-        // 3. Usar o construtor correto
-        Inscricao inscricao = new Inscricao(aluno, curso);
-
-        assertNotNull(inscricao.getCurso());
-        assertEquals(curso, inscricao.getCurso());
-        assertNotNull(inscricao.getAluno());
-        assertEquals(aluno, inscricao.getAluno());
-
-        assertNotNull(inscricao.getProgresso());
-        assertEquals(0.0, inscricao.getProgresso().getValor());
+        aluno.setId(1L);
+        return aluno;
     }
 
+    // Helper para criar um Curso simples
+    private Curso criarCurso() {
+        Curso curso = new Curso("Curso de Java", Categoria.TECNOLOGIA, "Descricao", 40, 0.0, "Prof");
+        curso.setId(10L); 
+        return curso;
+    }
+
+    /**
+     * Testa o construtor da Entidade, verificando relacionamentos e estado inicial.
+     * Cobre o construtor explícito e todos os getters gerados pelo Lombok (@Data).
+     */
+    @Test
+    public void deveCriarInscricaoComProgressoZeroECobrirGetters() {
+        // Cenário
+        Aluno aluno = criarAluno();
+        Curso curso = criarCurso();
+        
+        // Ação
+        Inscricao inscricao = new Inscricao(aluno, curso);
+        inscricao.setId(100L); // Cobre o setter/getter do ID
+
+        // Verificação: Cobre todos os getters do ID, Aluno, Curso e Progresso
+        assertNotNull(inscricao.getCurso(), "O curso não deve ser nulo.");
+        assertEquals(aluno.getId(), inscricao.getAluno().getId());
+        assertEquals(curso.getNome(), inscricao.getCurso().getNome());
+        assertEquals(100L, inscricao.getId()); 
+        
+        // Verifica o estado inicial do Progresso
+        assertNotNull(inscricao.getProgresso());
+        assertEquals(0.0, inscricao.getProgresso().getValor(), "O progresso inicial deve ser 0.0");
+    }
+
+    /**
+     * Testa o método atualizarProgresso.
+     * Cobre o caminho da única ramificação de código restante.
+     */
     @Test
     public void deveAtualizarProgressoCorretamente() {
-        // 4. Criar Aluno e Curso
-        Aluno aluno = new Aluno("Aluno Teste");
-        Curso curso = new Curso("Curso de Python", Categoria.TECNOLOGIA, null, 0, 0.0, null);
-        
-        // 5. Usar o construtor correto
+        // Cenário
+        Aluno aluno = criarAluno();
+        Curso curso = criarCurso();
         Inscricao inscricao = new Inscricao(aluno, curso);
 
         // Estado inicial
         assertEquals(0.0, inscricao.getProgresso().getValor());
 
-        // Atualiza o progresso
+        // Ação: Atualiza o progresso
         Progresso novoProgresso = new Progresso(45.5);
         inscricao.atualizarProgresso(novoProgresso);
 
-        // Valida o novo estado
+        // Verificação
         assertEquals(45.5, inscricao.getProgresso().getValor());
-        assertEquals(novoProgresso, inscricao.getProgresso());
+        assertEquals(novoProgresso, inscricao.getProgresso(), "A referência do Progresso deve ter sido atualizada.");
     }
 }
