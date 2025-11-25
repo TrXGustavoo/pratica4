@@ -4,18 +4,34 @@ services:
   database:
     image: postgres
     environment:
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: sapi
     volumes:
       - db-volume:/var/lib/postgresql/data
+    # O healthcheck garante que o container só fique "healthy" quando o Postgres aceitar conexões
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d sapi"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
   api:
     image: gimerguizo/ac2_ca:latest
     networks:
-      - default  # Certifique-se de que está usando a rede adequada
+      - default
     environment:
       DB_HOST: database
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/sapi
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
     ports:
       - "8686:8080"
+    depends_on:
+      database:
+        condition: service_healthy # Espera o healthcheck acima passar
+
 volumes:
   db-volume:
