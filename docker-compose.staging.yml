@@ -7,6 +7,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: sapi
+      PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
       - db-volume:/var/lib/postgresql/data
     # O healthcheck garante que o container só fique "healthy" quando o Postgres aceitar conexões
