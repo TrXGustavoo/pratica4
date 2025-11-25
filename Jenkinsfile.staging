@@ -10,6 +10,9 @@ pipeline {
 
     stage('Start container') {
       steps {
+        echo 'Cleaning up old containers and volumes...'
+        bat 'docker-compose -f docker-compose.staging.yml down -v || true'
+
         echo 'Starting container from Docker Hub...'
         bat 'docker-compose -f docker-compose.staging.yml pull' // Baixa a imagem do Docker Hub
         bat 'docker-compose -f docker-compose.staging.yml up -d --no-color'
@@ -30,6 +33,11 @@ pipeline {
     always {
       echo 'Pipeline completed'
       // Não derruba mais o container aqui
+    }
+    failure {
+        // Se falhar, mostra os logs do banco para entendermos o erro real
+        echo 'Pipeline failed. Showing database logs:'
+        bat 'docker-compose -f docker-compose.staging.yml logs database'
     }
   }
 }
