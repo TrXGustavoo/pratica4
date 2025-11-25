@@ -24,7 +24,20 @@ pipeline {
 
     stage('Run tests against the container') {
       steps {
-        bat 'curl http://localhost:8686 || echo "Service not responding"'
+        script {
+          echo 'Running tests against the staging container...'
+          timeout(time: 120, unit: 'SECONDS') {
+                waitUntil {
+                    // O 'returnStatus: true' impede que o pipeline falhe se o curl der erro
+                    // O curl -f falha se o HTTP code não for 200 OK
+                    def exitCode = bat(script: 'curl -f http://localhost:8686', returnStatus: true)
+                    
+                    // Se exitCode for 0 (sucesso), o waitUntil para. Se não, ele tenta de novo.
+                    return exitCode == 0
+                }
+            }
+        }
+        echo 'API is UP and responding!'
       }
     }
   }
