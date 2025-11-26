@@ -2,14 +2,7 @@ CODE_CHANGES = getGitChanges()
 
 pipeline {
     agent any
-    tools {
-        maven 'Maven'
-    }
-    environment {
-        SERVER_CREDENTIALS = credentials('server-credentials')
-    }
     parameters {
-        string(name: 'VERSION', defaultValue: '', description: 'version to deploy on prod')
         booleanParam(name: 'executeTests', defaultValue: true, description: '')
     }
 
