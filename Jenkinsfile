@@ -73,9 +73,6 @@ pipeline {
         always {
             echo 'Pipeline completed'
         }
-        success {
-            //
-        }
         failure {
             echo 'Pipeline failed. Showing database logs:'
             bat 'docker-compose -f docker-compose.staging.yml logs database'
