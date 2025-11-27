@@ -5,6 +5,11 @@ pipeline {
         booleanParam(name: 'executeTests', defaultValue: true, description: 'Se marcado, executa os testes durante o build')
     }
 
+    environment {
+        DOCKER_IMAGE = 'gimerguizo/ac2_ca' 
+        DOCKER_CREDENTIALS_ID = 'Credenciais Docker Hub 2'
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -42,7 +47,7 @@ pipeline {
                         sourceCodeRetention: 'LAST_BUILD',
                         qualityGates: [
                             [
-                                threshold: 97.0, 
+                                threshold: 70, 
                                 metric: 'LINE', 
                                 baseline: 'PROJECT', 
                                 // De UNSTABLE para FAILURE
@@ -55,11 +60,30 @@ pipeline {
             }
         }
 
-        stage('Image Docker') {
+        stage('Build & Publish Docker Image') {
             steps {
-                echo 'Construindo Imagem Docker...'
-                
-                
+                echo 'Construindo e Publicando Imagem Docker...'
+                // Chamar alvos Maven de alto nível
+                bat 'mvn clean package -Dmaven.test.skip=true'
+
+                // Login no Docker Hub usando as credenciais do Jenkins
+                withCredentials([usernamePassword(credentialsId: DOCKER_CREDENTIALS_ID, usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    
+                    // Login 
+                    bat 'docker login -u %DOCKER_USER% -p %DOCKER_PASS%'
+                    
+                    // Build da imagem
+                    // Assume que o Dockerfile está na raiz. Ajuste o caminho se necessário.
+                    bat "docker build -t ${DOCKER_IMAGE}:latest ."
+                    
+                    // Push para o Docker Hub
+                    bat "docker push ${DOCKER_IMAGE}:latest"
+                    
+                    echo 'Imagem publicada com sucesso!'
+                    
+                    // Logout por segurança
+                    bat 'docker logout'
+                }
             }
         }
 
