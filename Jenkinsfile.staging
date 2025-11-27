@@ -10,10 +10,13 @@ pipeline {
 
     stage('Start container') {
       steps {
+        echo 'Cleaning up old containers and volumes...'
+        bat 'docker-compose -f docker-compose.staging.yml down -v || true'
+
         echo 'Starting container from Docker Hub...'
         bat 'docker-compose -f docker-compose.staging.yml pull' // Baixa a imagem do Docker Hub
         bat 'docker-compose -f docker-compose.staging.yml up -d --no-color'
-        sleep time: 60, unit: 'SECONDS' // Aumenta o tempo para o serviço Spring Boot iniciar
+        // sleep time: 60, unit: 'SECONDS' // Aumenta o tempo para o serviço Spring Boot iniciar
         bat 'docker-compose -f docker-compose.staging.yml logs' // Verifica os logs para conferir o status do Spring Boot
         bat 'docker-compose -f docker-compose.staging.yml ps' // Verifica o status do container
       }
@@ -21,7 +24,20 @@ pipeline {
 
     stage('Run tests against the container') {
       steps {
-        bat 'curl http://localhost:8686 || echo "Service not responding"'
+        script {
+          echo 'Running tests against the staging container...'
+          timeout(time: 120, unit: 'SECONDS') {
+                waitUntil {
+                    // O 'returnStatus: true' impede que o pipeline falhe se o curl der erro
+                    // O curl -f falha se o HTTP code não for 200 OK
+                    def exitCode = bat(script: 'curl -f http://localhost:8686', returnStatus: true)
+                    
+                    // Se exitCode for 0 (sucesso), o waitUntil para. Se não, ele tenta de novo.
+                    return exitCode == 0
+                }
+            }
+        }
+        echo 'API is UP and responding!'
       }
     }
   }
@@ -30,6 +46,11 @@ pipeline {
     always {
       echo 'Pipeline completed'
       // Não derruba mais o container aqui
+    }
+    failure {
+        // Se falhar, mostra os logs do banco para entendermos o erro real
+        echo 'Pipeline failed. Showing database logs:'
+        bat 'docker-compose -f docker-compose.staging.yml logs database'
     }
   }
 }
