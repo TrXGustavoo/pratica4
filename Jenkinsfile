@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     parameters {
-        booleanParam(name: 'executeTests', defaultValue: true, description: 'Se marcado, executa os testes')
+        booleanParam(name: 'executeTests', defaultValue: true, description: 'Se marcado, executa os testes durante o build')
     }
 
     stages {
@@ -12,19 +12,54 @@ pipeline {
             }
         }
 
-        stage('Pipeline Dev') {
+        stage('[Pipeline Dev] Build (Maven) e Testes') {
             steps {
                 echo 'Building Application...'
-                // Garante que o Maven use o Java correto se configurado no Global Tools
-                // Se estiver usando o do sistema, o 'bat' direto funciona
-                bat 'mvn clean install'
+                script {
+                    // Roda o Maven e gera os relatórios (Surefire, PMD, JaCoCo)
+                    def mavenCmd = 'mvn clean install pmd:pmd'
+                    if (params.executeTests == false) {
+                        mavenCmd += ' -DskipTests'
+                    }
+                    bat mavenCmd
+                }
+            }
+
+            post {
+                always {
+                    // 1. Publicar testes JUnit
+                    junit testResults: '**/target/surefire-reports/*.xml', allowEmptyResults: true
+
+                    // 2. Publicar PMD
+                    recordIssues(
+                        enabledForFailure: true,
+                        tools: [mavenConsole(), pmdParser(pattern: '**/target/pmd.xml')]
+                    )
+
+                    // 3. Quality Gate de Cobertura 
+                    recordCoverage(
+                        tools: [[parser: 'JACOCO', pattern: '**/target/site/jacoco/jacoco.xml']],
+                        sourceCodeRetention: 'LAST_BUILD',
+                        qualityGates: [
+                            [
+                                threshold: 97.0, 
+                                metric: 'LINE', 
+                                baseline: 'PROJECT', 
+                                // De UNSTABLE para FAILURE
+                                // Isso faz o pipeline PARAR aqui se não atingir o threshold
+                                criticality: 'FAILURE' 
+                            ]
+                        ]
+                    )
+                }
             }
         }
 
         stage('Image Docker') {
             steps {
-                echo 'Placeholder for Docker Build...'
-                // Aqui você colocaria o 'docker build' futuramente
+                echo 'Construindo Imagem Docker...'
+                
+                
             }
         }
 
@@ -65,9 +100,12 @@ pipeline {
         }
     }
 
-    post {   
+    post {
         always {
-            echo 'Pipeline completed'
+            echo 'Pipeline finished.'
+        }
+        success {
+            echo 'Pipeline succeeded!'
         }
         failure {
             echo 'Pipeline failed. Showing database logs for debugging:'
