@@ -7,7 +7,7 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = 'gimerguizo/ac2_ca' 
-        DOCKER_CREDENTIALS_ID = 'Credenciais Docker Hub 2'
+        DOCKER_CREDENTIALS_ID = 'docker_jenkins'
     }
 
     stages {
@@ -47,7 +47,7 @@ pipeline {
                         sourceCodeRetention: 'LAST_BUILD',
                         qualityGates: [
                             [
-                                threshold: 70, 
+                                threshold: 99, 
                                 metric: 'LINE', 
                                 baseline: 'PROJECT', 
                                 // De UNSTABLE para FAILURE
