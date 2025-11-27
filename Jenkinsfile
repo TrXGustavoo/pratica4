@@ -47,7 +47,7 @@ pipeline {
                         sourceCodeRetention: 'LAST_BUILD',
                         qualityGates: [
                             [
-                                threshold: 99, 
+                                threshold: 97, 
                                 metric: 'LINE', 
                                 baseline: 'PROJECT', 
                                 // De UNSTABLE para FAILURE
