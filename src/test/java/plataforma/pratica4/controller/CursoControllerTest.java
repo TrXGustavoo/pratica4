@@ -21,8 +21,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import plataforma.pratica4.dominio.Categoria;
 import plataforma.pratica4.dominio.Curso;
-import plataforma.pratica4.dto.CursoDTO;
-import plataforma.pratica4.service.CursoService;
+import plataforma.pratica4.application.dto.CursoDTO;
+import plataforma.pratica4.application.service.CursoService;
 
 @WebMvcTest(CursoController.class)
 public class CursoControllerTest {

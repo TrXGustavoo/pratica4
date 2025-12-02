@@ -1,9 +1,9 @@
-package plataforma.pratica4.repository;
+package plataforma.pratica4.domain.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import plataforma.pratica4.dominio.Curso;
-import plataforma.pratica4.dominio.Categoria;
+import plataforma.pratica4.domain.model.Curso;
+import plataforma.pratica4.domain.model.Categoria;
 import java.util.List;
 
 @Repository

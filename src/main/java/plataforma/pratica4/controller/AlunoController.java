@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import plataforma.pratica4.dominio.Aluno;
-import plataforma.pratica4.service.AlunoService;
+import plataforma.pratica4.application.service.AlunoService;
 
 import java.net.URI;
 import java.util.List;

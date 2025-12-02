@@ -1,4 +1,4 @@
-package plataforma.pratica4.Test;
+package plataforma.pratica4.domain.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -9,11 +9,11 @@ import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import plataforma.pratica4.dominio.Aluno;
-import plataforma.pratica4.dominio.Categoria;
-import plataforma.pratica4.dominio.Curso;
-import plataforma.pratica4.dominio.Inscricao;
-import plataforma.pratica4.dominio.Progresso;
+import plataforma.pratica4.domain.model.Aluno;
+import plataforma.pratica4.domain.model.Categoria;
+import plataforma.pratica4.domain.model.Curso;
+import plataforma.pratica4.domain.model.Inscricao;
+import plataforma.pratica4.domain.model.Progresso;
 
 public class AlunoTest {
 

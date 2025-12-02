@@ -1,4 +1,4 @@
-package plataforma.pratica4.repository;
+package plataforma.pratica4.domain.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -10,8 +10,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 
-import plataforma.pratica4.dominio.Categoria;
-import plataforma.pratica4.dominio.Curso;
+import plataforma.pratica4.domain.model.Categoria;
+import plataforma.pratica4.domain.model.Curso;
 
 @DataJpaTest // Configura um banco em memória (H2) e scaneia as Entities e Repositories
 @ActiveProfiles("test") // Usa o application-test.properties

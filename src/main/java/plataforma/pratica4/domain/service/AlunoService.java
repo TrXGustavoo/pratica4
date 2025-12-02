@@ -1,13 +1,13 @@
-package plataforma.pratica4.service;
+package plataforma.pratica4.domain.service;
 
 // import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import plataforma.pratica4.dominio.Aluno;
-import plataforma.pratica4.dominio.Curso;
-import plataforma.pratica4.dominio.Inscricao;
-import plataforma.pratica4.repository.AlunoRepository;
-import plataforma.pratica4.repository.CursoRepository;
+import plataforma.pratica4.domain.model.Aluno;
+import plataforma.pratica4.domain.model.Curso;
+import plataforma.pratica4.domain.model.Inscricao;
+import plataforma.pratica4.domain.repository.AlunoRepository;
+import plataforma.pratica4.domain.repository.CursoRepository;
 
 import lombok.RequiredArgsConstructor;
 

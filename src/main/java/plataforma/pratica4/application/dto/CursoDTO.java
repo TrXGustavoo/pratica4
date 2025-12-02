@@ -1,4 +1,4 @@
-package plataforma.pratica4.dto;
+package plataforma.pratica4.application.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

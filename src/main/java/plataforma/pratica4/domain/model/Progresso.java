@@ -1,4 +1,4 @@
-package plataforma.pratica4.dominio;
+package plataforma.pratica4.domain.model;
 
 //import java.util.Objects;
 import jakarta.persistence.Embeddable;

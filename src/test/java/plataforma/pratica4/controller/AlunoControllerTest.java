@@ -19,7 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import plataforma.pratica4.dominio.Aluno;
-import plataforma.pratica4.service.AlunoService;
+import plataforma.pratica4.application.service.AlunoService;
 
 @WebMvcTest(AlunoController.class)
 public class AlunoControllerTest {

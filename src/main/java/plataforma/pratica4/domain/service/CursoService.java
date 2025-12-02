@@ -1,11 +1,11 @@
-package plataforma.pratica4.service;
+package plataforma.pratica4.application.service;
 
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor; 
 
 import plataforma.pratica4.dominio.Curso;
 import plataforma.pratica4.dominio.Categoria;
-import plataforma.pratica4.dto.CursoDTO;
+import plataforma.pratica4.application.dto;
 import plataforma.pratica4.repository.CursoRepository;
 
 import java.util.List;

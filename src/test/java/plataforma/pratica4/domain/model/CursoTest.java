@@ -1,4 +1,4 @@
-package plataforma.pratica4.dominio;
+package plataforma.pratica4.domain.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
