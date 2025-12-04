@@ -122,6 +122,25 @@ pipeline {
                 echo 'API is UP and responding!'
             }
         }
+
+        stage('Notificação Discord') {
+            steps {
+                script {
+                    def d = [:]
+                    def props = readProperties(defaults: d, file: './discord-id.properties')
+                    env.ID1 = props['id_Giovana']
+                    env.TIME = Calendar.getInstance(TimeZone.getTimeZone("Brazil/East")).getTime().format('dd/MM/YYYY - hh:mm:ss')
+                }
+                discordSend description: "Notificação",
+                notes: "Executado por: <@${env.ID1}>",
+                footer: "Execução: ${env.TIME}",
+                link: env.BUILD_URL,
+                result: currentBuild.currentResult,
+                title: JOB_NAME,
+                webhookURL: ""
+                enableArtifactsList: false
+            }
+        }
     }
 
     post {
