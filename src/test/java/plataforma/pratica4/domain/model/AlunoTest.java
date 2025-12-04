@@ -9,24 +9,16 @@ import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import plataforma.pratica4.domain.model.Aluno;
-import plataforma.pratica4.domain.model.Categoria;
-import plataforma.pratica4.domain.model.Curso;
-import plataforma.pratica4.domain.model.Inscricao;
-import plataforma.pratica4.domain.model.Progresso;
-
 public class AlunoTest {
 
     private Aluno aluno;
     private Curso cursoJava;
-    private Curso cursoPython;
     private Curso cursoInexistente;
 
     @BeforeEach
     void setUp() {
         aluno = new Aluno("Aluno Teste");
         cursoJava = new Curso("Curso de Java", Categoria.TECNOLOGIA, null, 0, 0.0, null);
-        cursoPython = new Curso("Curso de Python", Categoria.TECNOLOGIA, null, 0, 0.0, null);
         cursoInexistente = new Curso("Curso Inexistente", Categoria.TECNOLOGIA, null, 0, 0.0, null);
     }
     

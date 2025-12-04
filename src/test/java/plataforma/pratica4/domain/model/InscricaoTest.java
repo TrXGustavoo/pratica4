@@ -6,12 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
-import plataforma.pratica4.domain.model.Categoria;
-import plataforma.pratica4.domain.model.Curso;
-import plataforma.pratica4.domain.model.Inscricao;
-import plataforma.pratica4.domain.model.Progresso;
-import plataforma.pratica4.domain.model.Aluno; 
-
 public class InscricaoTest {
 
     // Helper para criar um Aluno simples

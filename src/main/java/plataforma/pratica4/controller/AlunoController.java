@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import plataforma.pratica4.dominio.Aluno;
-import plataforma.pratica4.application.service.AlunoService;
+import plataforma.pratica4.domain.model.Aluno;
+import plataforma.pratica4.domain.service.AlunoService;
 
 import java.net.URI;
 import java.util.List;
