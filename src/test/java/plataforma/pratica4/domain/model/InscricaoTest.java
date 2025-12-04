@@ -1,16 +1,10 @@
-package plataforma.pratica4.Test;
+package plataforma.pratica4.domain.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 // import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.Test;
-
-import plataforma.pratica4.dominio.Categoria;
-import plataforma.pratica4.dominio.Curso;
-import plataforma.pratica4.dominio.Inscricao;
-import plataforma.pratica4.dominio.Progresso;
-import plataforma.pratica4.dominio.Aluno; 
 
 public class InscricaoTest {
 

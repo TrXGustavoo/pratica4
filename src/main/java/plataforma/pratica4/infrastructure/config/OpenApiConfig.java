@@ -1,4 +1,4 @@
-package plataforma.pratica4.config;
+package plataforma.pratica4.infrastructure.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

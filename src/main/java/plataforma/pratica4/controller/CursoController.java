@@ -12,10 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import plataforma.pratica4.dominio.Curso;
-import plataforma.pratica4.dominio.Categoria;
-import plataforma.pratica4.dto.CursoDTO;
-import plataforma.pratica4.service.CursoService;
+import plataforma.pratica4.domain.model.Curso;
+import plataforma.pratica4.domain.model.Categoria;
+import plataforma.pratica4.application.dto.CursoDTO;
+import plataforma.pratica4.domain.service.CursoService;
 
 import java.net.URI;
 import java.util.List;

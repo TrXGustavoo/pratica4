@@ -1,4 +1,4 @@
-package plataforma.pratica4.service;
+package plataforma.pratica4.domain.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
@@ -15,10 +15,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import plataforma.pratica4.dominio.Categoria;
-import plataforma.pratica4.dominio.Curso;
-import plataforma.pratica4.dto.CursoDTO;
-import plataforma.pratica4.repository.CursoRepository;
+import plataforma.pratica4.domain.model.Categoria;
+import plataforma.pratica4.domain.model.Curso;
+import plataforma.pratica4.application.dto.CursoDTO;
+import plataforma.pratica4.domain.repository.CursoRepository;
 
 @ExtendWith(MockitoExtension.class)
 public class CursoServiceTest {
