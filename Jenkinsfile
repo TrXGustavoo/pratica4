@@ -137,7 +137,7 @@ pipeline {
                 link: env.BUILD_URL,
                 result: currentBuild.currentResult,
                 title: JOB_NAME,
-                webhookURL: ""
+                webhookURL: "https://discord.com/api/webhooks/1446233801448624189/2d0Z04p8ipbXXQJllw3LjJleXpiETucY3APaTMTmzwSQ7QDbW6R9Gj3HFPH7E90sRE8x"
                 enableArtifactsList: false
             }
         }
