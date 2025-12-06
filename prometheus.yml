@@ -1,0 +1,8 @@
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: 'pratica4-api'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['app-pratica4:8080'] # Nome do container da aplicação
